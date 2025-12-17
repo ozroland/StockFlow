@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+
+  <Project Path="StockFlow.dcproj">
+    <Build />
+  </Project>
+
+  <Folder Name="/src/">
+    <Project Path="src/StockFlow.Api/StockFlow.Api.csproj" />
+    <Project Path="src/StockFlow.Application/StockFlow.Application.csproj" />
+    <Project Path="src/StockFlow.Domain/StockFlow.Domain.csproj" />
+    <Project Path="src/StockFlow.Infrastructure/StockFlow.Infrastructure.csproj" />
+  </Folder>
+
+  <Folder Name="/tests/">
+    <Project Path="tests/StockFlow.Tests/StockFlow.Tests.csproj" />
+  </Folder>
+</Solution>

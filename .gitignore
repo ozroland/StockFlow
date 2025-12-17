@@ -1,0 +1,36 @@
+## .NET Core
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.slnhistory
+*.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Environment config
+.env
