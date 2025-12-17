@@ -10,7 +10,16 @@ Modern Inventory Management System built with **.NET 10** and **Clean Architectu
 * **MediatR** - CQRS Pattern
 * **FluentValidation** - Validation Pipeline
 * **AutoMapper** - Object Mapping
-* **Scalar** - API Documentation (Replaces Swagger)
+* **Scalar** - API Documentation
+
+## 📂 Project Structure
+
+The solution follows the **Clean Architecture** principles:
+
+* **StockFlow.Domain** - Enterprise logic, Entities, Value Objects (No dependencies).
+* **StockFlow.Application** - Use Cases, Interfaces, DTOs (Depends on Domain).
+* **StockFlow.Infrastructure** - DB Implementation, External Services (Depends on Application & Domain).
+* **StockFlow.Api** - Entry point, Controllers, Configuration (Depends on Application & Infrastructure).
 
 ## 🛠️ How to Run
 
