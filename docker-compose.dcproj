@@ -9,7 +9,10 @@
     <DockerServiceName>api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docker-compose.yml"/>
-    <None Include=".dockerignore"/>
+    <None Remove="global.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docker-compose.yml" />
+    <None Include=".dockerignore" />
   </ItemGroup>
 </Project>

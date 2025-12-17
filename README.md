@@ -20,7 +20,7 @@ Modern Inventory Management System built with **.NET 10** and **Clean Architectu
     * Visual Studio 2026.
 
 2.  **Start the Application:**
-    Open the solution in Visual Studio and set `StockFlow` (Docker Compose) as the startup project.
+    Open the solution in Visual Studio and set docker-compose.dcproj as the startup project.
     Press **F5**.
 
 3.  **Access the API:**
