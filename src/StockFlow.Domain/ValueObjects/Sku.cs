@@ -1,15 +1,27 @@
-﻿namespace StockFlow.Domain.ValueObjects;
+using System.Text.RegularExpressions;
 
-public record Sku
+namespace StockFlow.Domain.ValueObjects;
+
+public partial record Sku
 {
-    private const int _defaultLength = 8;
-    public string Value { get; }
+    public const string Pattern = @"^[A-Z]{4}-\d{4}$";
 
+    public string Value { get; }
     private Sku(string value) => Value = value;
 
-    public static Sku? Create(string value)
+    [GeneratedRegex(Pattern)]
+    private static partial Regex SkuRegex();
+
+    public static Sku Create(string value)
     {
-        return string.IsNullOrWhiteSpace(value) || value.Length < _defaultLength ? null : new Sku(value.ToUpper());
+        if (string.IsNullOrWhiteSpace(value))
+            throw new ArgumentException("SKU cannot be empty.", nameof(value));
+
+        var normalized = value.ToUpper().Trim();
+
+        return !SkuRegex().IsMatch(normalized)
+            ? throw new ArgumentException($"Invalid SKU format. Expected pattern: {Pattern}", nameof(value))
+            : new Sku(normalized);
     }
 
     public override string ToString() => Value;

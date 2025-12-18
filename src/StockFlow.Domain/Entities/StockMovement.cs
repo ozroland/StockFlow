@@ -17,7 +17,7 @@ public class StockMovement : BaseEntity
     public StockMovement(Guid productId, Guid warehouseId, StockMovementType type, int quantity, Guid userId, string? note = null)
     {
         if (quantity == 0)
-            throw new ArgumentException("A mennyiség nem lehet 0.");
+            throw new ArgumentException("Quantity cannot be zero.");
 
         ProductId = productId;
         WarehouseId = warehouseId;

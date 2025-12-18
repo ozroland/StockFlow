@@ -1,7 +1,8 @@
-﻿using MediatR;
+using MediatR;
 
 using StockFlow.Application.Common.Interfaces;
 using StockFlow.Domain.Entities;
+using StockFlow.Domain.Exceptions;
 using StockFlow.Domain.ValueObjects;
 
 namespace StockFlow.Application.Features.Products.Commands.CreateProduct;
@@ -18,11 +19,11 @@ public class CreateProductCommandHandler(IProductRepository repository) : IReque
 {
     public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var skuResult = Sku.Create(request.Sku) ?? throw new ArgumentException("Invalid SKU format!");
+        var skuResult = Sku.Create(request.Sku);
         var existingProduct = await repository.GetBySkuAsync(skuResult, cancellationToken);
         if (existingProduct is not null)
         {
-            throw new InvalidOperationException($"Product with SKU '{request.Sku}' already exists.");
+            throw new ProductAlreadyExistsException(request.Sku);
         }
 
         var price = new Money(request.PriceAmount, request.PriceCurrency);

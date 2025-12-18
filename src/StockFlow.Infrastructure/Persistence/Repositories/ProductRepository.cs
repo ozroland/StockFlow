@@ -23,6 +23,12 @@ public class ProductRepository(ApplicationDbContext context) : IProductRepositor
         await context.Products.AddAsync(product, cancellationToken);
     }
 
+    public Task UpdateAsync(Product product, CancellationToken cancellationToken)
+    {
+        context.Products.Update(product);
+        return Task.CompletedTask;
+    }
+
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
     {
         await context.SaveChangesAsync(cancellationToken);

@@ -1,5 +1,7 @@
 using FluentValidation;
 
+using StockFlow.Domain.ValueObjects;
+
 namespace StockFlow.Application.Features.Products.Commands.CreateProduct;
 
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
@@ -8,7 +10,9 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     {
         RuleFor(x => x.Sku)
             .NotEmpty().WithMessage("SKU is required.")
-            .MaximumLength(50).WithMessage("SKU must not exceed 50 characters.");
+            .MaximumLength(50).WithMessage("SKU must not exceed 50 characters.")
+            .Matches(Sku.Pattern)
+            .WithMessage($"SKU format must follow pattern e.g.: SONY-1234");
 
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Product name is required.")

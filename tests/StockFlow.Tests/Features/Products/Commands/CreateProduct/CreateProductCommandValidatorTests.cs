@@ -25,7 +25,7 @@ public class CreateProductCommandValidatorTests
     public void Should_Have_Error_When_Price_Is_Negative()
     {
         // Arrange
-        var command = new CreateProductCommand("SKU-123", "Valid Name", -500, "EUR", null);
+        var command = new CreateProductCommand("SKUA-1234", "Valid Name", -500, "EUR", null);
 
         // Act
         var result = _validator.TestValidate(command);
@@ -38,7 +38,7 @@ public class CreateProductCommandValidatorTests
     public void Should_Not_Have_Error_When_Command_Is_Valid()
     {
         // Arrange
-        var command = new CreateProductCommand("SKU-123", "iPhone 15", 1000, "EUR", "Description");
+        var command = new CreateProductCommand("SKUA-1234", "IPhone 15", 1000, "EUR", "Description");
 
         // Act
         var result = _validator.TestValidate(command);

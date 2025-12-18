@@ -1,10 +1,14 @@
 using StockFlow.Domain.Common;
+using StockFlow.Domain.Events;
+using StockFlow.Domain.Exceptions;
 using StockFlow.Domain.ValueObjects;
 
 namespace StockFlow.Domain.Entities;
 
 public class Product(Sku sku, string name, Money price, string? description = null) : BaseEntity
 {
+    private const int LowStockThreshold = 10;
+
     public Sku Sku { get; private set; } = sku;
     public string Name { get; private set; } = name;
     public string? Description { get; private set; } = description;
@@ -32,13 +36,31 @@ public class Product(Sku sku, string name, Money price, string? description = nu
         LastModifiedAt = DateTimeOffset.UtcNow;
     }
 
-    internal void AdjustStock(int quantity)
+    public void AddStock(int quantity)
     {
-        int newLevel = StockLevel + quantity;
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
+
+        StockLevel += quantity;
+        LastModifiedAt = DateTimeOffset.UtcNow;
+    }
+
+    public void RemoveStock(int quantity)
+    {
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
+
+        int newLevel = StockLevel - quantity;
 
         if (newLevel < 0)
-            throw new InvalidOperationException($"Insufficient stock. Current: {StockLevel}, Deduction: {Math.Abs(quantity)}");
+            throw new InsufficientStockException(Id, StockLevel, quantity);
 
         StockLevel = newLevel;
+        LastModifiedAt = DateTimeOffset.UtcNow;
+
+        if (StockLevel <= LowStockThreshold)
+        {
+            AddDomainEvent(new ProductLowStockEvent(Id, StockLevel));
+        }
     }
 }
